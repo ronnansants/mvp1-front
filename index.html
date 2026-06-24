@@ -14,21 +14,121 @@
     <!-- Arquivo de estilo -->
     <link rel="stylesheet" href="./src/styles/styles.css" />
   </head>
+  <!-- Script geral -->
+  <script type="module" src="./src/scripts/index.js"></script>
   <body>
     <!-- Cabeçalho -->
-    <header>
-      <ul>
-        <li>Inicio</li>
-        <li>Contatos</li>
-        <li>Sobre</li>
-      </ul>
+    <header class="cabecalho">
+      <nav class="menu-navegacao" aria-label="Navegação principal">
+        <ul class="menu-lista">
+          <li><a href="#inicio" class="menu-link">Início</a></li>
+          <li><a href="#contatos" class="menu-link">Contatos</a></li>
+          <li><a href="#sobre" class="menu-link">Sobre</a></li>
+        </ul>
+      </nav>
     </header>
     <!-- fim do Cabeçalho -->
     <main>
+      <!-- inicio container -->
       <div class="container">
-        <h1>Lista de contatos</h1>
-        <p>a lista de contatos</p>
+        <h1 class="title">Salve seu contato</h1>
+        <form action="/contato" method="post" class="form-cadastro">
+          <!-- Grupo: Identificação -->
+          <fieldset class="form-grupo">
+            <legend class="sr-only">Dados Pessoais</legend>
+
+            <div class="linha-dupla">
+              <div class="campo">
+                <label for="Nome"
+                  >Nome
+                  <span class="obrigatorio" aria-hidden="true">*</span></label
+                >
+                <input
+                  type="text"
+                  name="nome"
+                  id="Nome"
+                  required
+                  autocomplete="given-name"
+                />
+              </div>
+
+              <div class="campo">
+                <label for="Sobrenome">Sobrenome</label>
+                <input
+                  type="text"
+                  name="sobrenome"
+                  id="Sobrenome"
+                  autocomplete="family-name"
+                />
+              </div>
+            </div>
+
+            <div class="campo">
+              <label for="Apelido"
+                >Como prefere ser chamado?
+                <span class="opcional">(Apelido)</span></label
+              >
+              <input
+                type="text"
+                name="apelido"
+                id="Apelido"
+                autocomplete="nickname"
+              />
+            </div>
+          </fieldset>
+
+          <!-- Grupo: Contato -->
+          <fieldset class="form-grupo">
+            <legend class="sr-only">Informações de Contato</legend>
+
+            <div class="campo">
+              <label for="Celular"
+                >Telefone / Celular
+                <span class="obrigatorio" aria-hidden="true">*</span></label
+              >
+              <!-- Integrado com a máscara que criamos no primeiro passo -->
+              <input
+                type="tel"
+                name="celular"
+                id="Celular"
+                placeholder="(00) 00000-0000"
+                maxlength="15"
+                required
+                autocomplete="tel"
+              />
+            </div>
+
+            <div class="campo">
+              <label for="Email">E-mail</label>
+              <input
+                type="email"
+                name="email"
+                id="Email"
+                placeholder="exemplo@email.com"
+                autocomplete="email"
+              />
+            </div>
+          </fieldset>
+
+          <!-- Ações do Formulário -->
+          <div class="form-acoes">
+            <!-- Botão Limpar (Esquerda, Secundário) -->
+            <button
+              type="reset"
+              class="btn btn-limpar"
+              onclick="btnLimpar(this, event)"
+            >
+              <i class="bi bi-trash3" aria-hidden="true"></i> Limpar dados
+            </button>
+
+            <!-- Botão Cadastrar (Direita, Primário) -->
+            <button type="submit" class="btn btn-salvar">
+              <i class="bi bi-floppy" aria-hidden="true"></i>Cadastrar
+            </button>
+          </div>
+        </form>
       </div>
+      <!-- fim container -->
     </main>
     <!-- Rodape -->
     <footer>
