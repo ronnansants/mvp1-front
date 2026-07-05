@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="pt-br">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -14,8 +14,6 @@
     <!-- Arquivo de estilo -->
     <link rel="stylesheet" href="./src/styles/styles.css" />
   </head>
-  <!-- Script geral -->
-  <script type="module" src="./src/scripts/index.js"></script>
   <body>
     <!-- Cabeçalho -->
     <header class="cabecalho">
@@ -32,7 +30,8 @@
       <!-- inicio container -->
       <div class="container">
         <h1 class="title">Salve seu contato</h1>
-        <form action="/contato" method="post" class="form-cadastro">
+
+        <form id="form-cadastro" class="form-cadastro">
           <!-- Grupo: Identificação -->
           <fieldset class="form-grupo">
             <legend class="sr-only">Dados Pessoais</legend>
@@ -46,18 +45,22 @@
                 <input
                   type="text"
                   name="nome"
-                  id="Nome"
+                  id="nome"
                   required
                   autocomplete="given-name"
                 />
               </div>
 
               <div class="campo">
-                <label for="Sobrenome">Sobrenome</label>
+                <label for="Sobrenome"
+                  >Sobrenome
+                  <span class="obrigatorio" aria-hidden="true">*</span></label
+                >
                 <input
                   type="text"
                   name="sobrenome"
-                  id="Sobrenome"
+                  id="sobrenome"
+                  required
                   autocomplete="family-name"
                 />
               </div>
@@ -71,7 +74,7 @@
               <input
                 type="text"
                 name="apelido"
-                id="Apelido"
+                id="apelido"
                 autocomplete="nickname"
               />
             </div>
@@ -86,11 +89,11 @@
                 >Telefone / Celular
                 <span class="obrigatorio" aria-hidden="true">*</span></label
               >
-              <!-- Integrado com a máscara que criamos no primeiro passo -->
+
               <input
                 type="tel"
                 name="celular"
-                id="Celular"
+                id="celular"
                 placeholder="(00) 00000-0000"
                 maxlength="15"
                 required
@@ -103,10 +106,14 @@
               <input
                 type="email"
                 name="email"
-                id="Email"
+                id="email"
                 placeholder="exemplo@email.com"
                 autocomplete="email"
               />
+            </div>
+
+            <div class="campo">
+              <input type="hidden" id="contato-id" readonly />
             </div>
           </fieldset>
 
@@ -123,25 +130,135 @@
 
             <!-- Botão Cadastrar (Direita, Primário) -->
             <button type="submit" class="btn btn-salvar">
-              <i class="bi bi-floppy" aria-hidden="true"></i>Cadastrar
+              <i class="bi bi-floppy" aria-hidden="true"></i>Salvar
             </button>
           </div>
         </form>
+
+        <!-- Mensagem/alertas para o usuarioa -->
+        <p id="mensagem" class="mensagem-status" aria-live="polite"></p>
       </div>
       <!-- fim container -->
+
+      <!-- inicio listagem dos contatos -->
+      <section id="contatos" class="secao-contatos">
+        <div class="cabecalho-secao">
+          <h2>Contatos cadastrados</h2>
+          <div class="acoes-busca">
+            <input
+              type="text"
+              id="filtro-nome"
+              placeholder="Buscar contato por nome"
+            />
+            <button type="button" id="btn-buscar" class="btn">Buscar</button>
+            <button type="button" id="btn-listar" class="btn">
+              Listar todos
+            </button>
+          </div>
+        </div>
+
+        <div id="lista-contatos" class="lista-contatos"></div>
+      </section>
     </main>
+    <section id="sobre" class="secao-sobre">
+      <div class="sobre-container">
+        <div class="sobre-card">
+          <h2>Sobre o projeto</h2>
+          <p>
+            Este projeto foi desenvolvido como MVP da disciplina de
+            Desenvolvimento Full Stack Básico da pós-graduação da PUC-Rio. Seu
+            objetivo é oferecer uma aplicação web simples e funcional, aplicando
+            conceitos de front-end, back-end e integração com banco de dados.
+          </p>
+          <p>
+            As tecnologias utilizadas foram HTML, CSS e JavaScript puro no
+            front-end, e com Python, Flask, Swagger e SQLite no back-end,
+            seguindo a proposta acadêmica de separação entre cliente e servidor
+            e uso de API documentada.
+          </p>
+        </div>
+
+        <div class="sobre-card">
+          <h2>Finalidade</h2>
+          <p>
+            A finalidade deste sistema é facilitar o gerenciamento de contatos
+            pessoais ou profissionais em uma interface prática, organizada e
+            acessível. O usuário pode cadastrar informações importantes como
+            nome, sobrenome, apelido, celular e e-mail.
+          </p>
+          <p>
+            Além de resolver um problema real de organização, o projeto também
+            demonstra na prática a construção de uma SPA conectada a uma API
+            REST com operações completas de cadastro, listagem, atualização e
+            remoção de dados.
+          </p>
+        </div>
+
+        <div class="sobre-card">
+          <h2>Sobre mim</h2>
+          <p>
+            Meu nome é Ronnan Cardoso dos Santos e sou aluno da pós-graduação em
+            Desenvolvimento Full Stack. Este projeto representa minha aplicação
+            prática dos conteúdos estudados ao longo da disciplina, unindo
+            aprendizado técnico, organização de código e construção de uma
+            solução útil.
+          </p>
+          <p>
+            Busquei desenvolver uma aplicação clara e funcional, demonstrando
+            evolução no uso de tecnologias de front-end e back-end, além da
+            integração com banco de dados e documentação de API.
+          </p>
+        </div>
+      </div>
+    </section>
     <!-- Rodape -->
     <footer>
       <div class="footer-left">Desenvolvido por Ronnan Cardoso dos Santos</div>
       <div class="footer-right">
-        <a href="https://www.linkedin.com/in/ronnan-santos/" target="_blank"
+        <a
+          href="https://www.linkedin.com/in/ronnan-santos/"
+          target="_blank"
+          rel="noopener noreferrer"
           ><i class="bi bi-linkedin" style="color: #0a66c2"></i
         ></a>
-        <a href="https://github.com/ronnansants" target="_blank"
+        <a
+          href="https://github.com/ronnansants"
+          target="_blank"
+          rel="noopener noreferrer"
           ><i class="bi bi-github"></i>
         </a>
       </div>
     </footer>
     <!-- Fim do Rodape -->
+    <div id="modal-excluir" class="modal hidden" aria-hidden="true">
+      <div class="modal-backdrop"></div>
+      <div
+        class="modal-box"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="modal-titulo"
+      >
+        <h3 id="modal-titulo">Confirmar exclusão</h3>
+        <p id="modal-texto">Tem certeza que deseja excluir este contato?</p>
+        <div class="modal-acoes">
+          <button
+            type="button"
+            id="btn-cancelar-exclusao"
+            class="btn btn-limpar"
+          >
+            Cancelar
+          </button>
+          <button
+            type="button"
+            id="btn-confirmar-exclusao"
+            class="btn btn-excluir"
+          >
+            Excluir
+          </button>
+        </div>
+      </div>
+    </div>
+    <!-- Script geral -->
+    <script type="module" src="./src/scripts/index.js"></script>
   </body>
 </html>
